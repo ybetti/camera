@@ -65,9 +65,9 @@
 
                     if (!tooClose) {
                         context.beginPath();
-                        context.arc(x, y, 20, 0, 5 * Math.PI); // 大きな円を描画
+                        context.arc(x, y, 30, 0, 5 * Math.PI); // 大きな円を描画
                         context.strokeStyle = 'lightgreen';
-                        context.lineWidth = 5; // 線の太さを5ピクセルに設定
+                        context.lineWidth = 10; // 線の太さを5ピクセルに設定
                         context.stroke();
                         circles.push({ x, y }); // 〇印の位置を記録
                     }
