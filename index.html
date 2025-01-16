@@ -35,8 +35,8 @@
                 const green = data[i + 1];
                 const blue = data[i + 2];
 
-                // 赤色成分の閾値を設定
-                if (red > 150 && green < 100 && blue < 100) {
+                // 黒寄りの赤色を検出し、ピンクのような薄い赤色を除外する閾値を設定
+                if (red > 100 && red > green * 2 && red > blue * 2) {
                     const x = (i / 4) % canvas.width;
                     const y = Math.floor((i / 4) / canvas.width);
                     context.beginPath();
