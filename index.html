@@ -45,12 +45,12 @@
                 const blue = data[i + 2];
 
                 // 黒寄りの赤色を検出し、ピンクのような薄い赤色を除外する閾値を設定
-                if (red > 100 && red > green * 2 && red > blue * 2) {
+                if (red > 100 && red > green * 1.8 && red > blue * 1.8) {
                     const x = (i / 4) % canvas.width;
                     const y = Math.floor((i / 4) / canvas.width);
                     context.beginPath();
                     context.arc(x, y, 10, 0, 2 * Math.PI);
-                    context.strokeStyle = 'red';
+                    context.strokeStyle = 'lightgreen';
                     context.stroke();
                 }
             }
