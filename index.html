@@ -12,18 +12,27 @@
     </style>
 </head>
 <body>
-    <video id="video" width="640" height="480" autoplay></video>
-    <canvas id="canvas" width="640" height="480"></canvas>
+    <video id="video" width="1280" height="720" autoplay></video>
+    <canvas id="canvas" width="1280" height="720"></canvas>
     <script>
         const video = document.getElementById('video');
         const canvas = document.getElementById('canvas');
         const context = canvas.getContext('2d');
 
-        // カメラの映像を取得
-        navigator.mediaDevices.getUserMedia({ video: true })
-            .then(stream => {
-                video.srcObject = stream;
-            });
+        // カメラの映像を取得（外カメラを使用し、高解像度を設定）
+        navigator.mediaDevices.getUserMedia({ 
+            video: { 
+                facingMode: { exact: "environment" },
+                width: { ideal: 1280 },
+                height: { ideal: 720 }
+            } 
+        })
+        .then(stream => {
+            video.srcObject = stream;
+        })
+        .catch(error => {
+            console.error("外カメラの使用に失敗しました:", error);
+        });
 
         function detectRed() {
             context.drawImage(video, 0, 0, canvas.width, canvas.height);
