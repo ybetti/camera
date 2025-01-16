@@ -19,12 +19,12 @@
         const canvas = document.getElementById('canvas');
         const context = canvas.getContext('2d');
 
-        // カメラの映像を取得（外カメラを使用し、高解像度を設定）
+        // カメラの映像を取得（外カメラを使用し、超高解像度を設定）
         navigator.mediaDevices.getUserMedia({ 
             video: { 
                 facingMode: { exact: "environment" },
-                width: { ideal: 1920 },
-                height: { ideal: 1080 }
+                width: { ideal: 3840 }, // 4K解像度
+                height: { ideal: 2160 }
             } 
         })
         .then(stream => {
