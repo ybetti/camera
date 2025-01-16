@@ -39,8 +39,6 @@
             const imageData = context.getImageData(0, 0, canvas.width, canvas.height);
             const data = imageData.data;
 
-            const redPixels = [];
-
             for (let i = 0; i < data.length; i += 4) {
                 const red = data[i];
                 const green = data[i + 1];
@@ -50,28 +48,11 @@
                 if (red > 100 && red > green * 2 && red > blue * 2) {
                     const x = (i / 4) % canvas.width;
                     const y = Math.floor((i / 4) / canvas.width);
-                    redPixels.push({ x, y });
+                    context.beginPath();
+                    context.arc(x, y, 10, 0, 2 * Math.PI);
+                    context.strokeStyle = 'red';
+                    context.stroke();
                 }
-            }
-
-            // 赤色の連続した領域をグループ化して囲む
-            if (redPixels.length > 0) {
-                let minX = redPixels[0].x;
-                let minY = redPixels[0].y;
-                let maxX = redPixels[0].x;
-                let maxY = redPixels[0].y;
-
-                redPixels.forEach(pixel => {
-                    if (pixel.x < minX) minX = pixel.x;
-                    if (pixel.y < minY) minY = pixel.y;
-                    if (pixel.x > maxX) maxX = pixel.x;
-                    if (pixel.y > maxY) maxY = pixel.y;
-                });
-
-                context.beginPath();
-                context.rect(minX, minY, maxX - minX, maxY - minY);
-                context.strokeStyle = 'red';
-                context.stroke();
             }
         }
 
