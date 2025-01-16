@@ -65,11 +65,16 @@
 
                     if (!tooClose) {
                         context.beginPath();
-                        context.arc(x, y, 30, 0, 5 * Math.PI); // 大きな円を描画
+                        context.arc(x, y, 30, 0, 2 * Math.PI); // 大きな円を描画
                         context.strokeStyle = 'lightgreen';
-                        context.lineWidth = 10; // 線の太さを5ピクセルに設定
+                        context.lineWidth = 10; // 線の太さを10ピクセルに設定
                         context.stroke();
                         circles.push({ x, y }); // 〇印の位置を記録
+
+                        // バイブレーションを発生させる
+                        if (navigator.vibrate) {
+                            navigator.vibrate(200); // 200ミリ秒間振動
+                        }
                     }
                 }
             }
