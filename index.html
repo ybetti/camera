@@ -23,8 +23,8 @@
         navigator.mediaDevices.getUserMedia({ 
             video: { 
                 facingMode: { exact: "environment" },
-                width: { ideal: 1280 },
-                height: { ideal: 720 }
+                width: { ideal: 1920 },
+                height: { ideal: 1080 }
             } 
         })
         .then(stream => {
@@ -46,8 +46,8 @@
                 const green = data[i + 1];
                 const blue = data[i + 2];
 
-                // 鮮やかな赤や細い線状の赤色を検出する閾値を設定
-                if (red > 150 && red > green * 1.5 && red > blue * 1.5) {
+                // 鮮やかな赤や細い線状の赤色を検出し、茶色を除外する閾値を設定
+                if (red > 150 && red > green * 1.5 && red > blue * 1.5 && green < 100 && blue < 100) {
                     const x = (i / 4) % canvas.width;
                     const y = Math.floor((i / 4) / canvas.width);
 
