@@ -34,6 +34,8 @@
             console.error("外カメラの使用に失敗しました:", error);
         });
 
+        const circles = []; // 描画された〇印の位置を記録する配列
+
         function detectRed() {
             context.drawImage(video, 0, 0, canvas.width, canvas.height);
             const imageData = context.getImageData(0, 0, canvas.width, canvas.height);
@@ -49,12 +51,26 @@
                     const x = (i / 4) % canvas.width;
                     const y = Math.floor((i / 4) / canvas.width);
 
-                    // 大きな〇印を描画
-                    context.beginPath();
-                    context.arc(x, y, 40, 0, 2 * Math.PI); // 大きな円を描画
-                    context.strokeStyle = 'lightgreen';
-                    context.lineWidth = 20; // 線の太さを10ピクセルに設定
-                    context.stroke();
+                    // 既存の〇印と一定の距離以上離れているか確認
+                    let tooClose = false;
+                    for (const circle of circles) {
+                        const dx = circle.x - x;
+                        const dy = circle.y - y;
+                        const distance = Math.sqrt(dx * dx + dy * dy);
+                        if (distance < 80) { // 80ピクセル以上離れているか確認
+                            tooClose = true;
+                            break;
+                        }
+                    }
+
+                    if (!tooClose) {
+                        context.beginPath();
+                        context.arc(x, y, 40, 0, 2 * Math.PI); // 大きな円を描画
+                        context.strokeStyle = 'green';
+                        context.lineWidth = 20; // 線の太さを20ピクセルに設定
+                        context.stroke();
+                        circles.push({ x, y }); // 〇印の位置を記録
+                    }
                 }
             }
         }
